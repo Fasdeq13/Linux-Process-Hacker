@@ -1,9 +1,19 @@
+#include <unistd.h>
+
 #ifndef PROCESSREADER_H
 #define PROCESSREADER_H
 
 #include <QObject>
 #include <QVector>
+#include <QHash>
+#include <QElapsedTimer>
 #include "ProcessInfo.h"
+
+struct ProcessIoSnapshot
+{
+    qint64 readBytes = 0;
+    qint64 writeBytes = 0;
+};
 
 class ProcessReader : public QObject
 {
@@ -20,7 +30,13 @@ private:
     bool parseStatusFile(int pid, ProcessInfo &processInfo);
     bool parseCmdlineFile(int pid, ProcessInfo &processInfo);
     bool parseExeLink(int pid, ProcessInfo &processInfo);
+    bool parseIoFile(int pid, ProcessInfo &processInfo);
+    void computeIoDeltaPerSecond(ProcessInfo &processInfo);
     QString resolveUserName(int userId);
+
+    QHash<int, ProcessIoSnapshot> previousIoSnapshots;
+    QElapsedTimer ioDeltaTimer;
+    bool ioDeltaTimerStarted = false;
 };
 
 #endif

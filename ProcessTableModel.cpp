@@ -1,5 +1,8 @@
 #include "ProcessTableModel.h"
 
+#include <QBrush>
+#include <QColor>
+
 ProcessTableModel::ProcessTableModel(QObject *parent)
     : QAbstractTableModel(parent)
 {
@@ -27,11 +30,25 @@ QVariant ProcessTableModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    if (role != Qt::DisplayRole) {
+    const ProcessInfo &processInfo = processes.at(index.row());
+
+    if (role == Qt::BackgroundRole) {
+        if (hiddenProcessIdSet.contains(processInfo.pid) || processInfo.isHiddenFromProcFs) {
+            return QBrush(QColor(180, 30, 30));
+        }
         return QVariant();
     }
 
-    const ProcessInfo &processInfo = processes.at(index.row());
+    if (role == Qt::ForegroundRole) {
+        if (hiddenProcessIdSet.contains(processInfo.pid) || processInfo.isHiddenFromProcFs) {
+            return QBrush(QColor(255, 255, 255));
+        }
+        return QVariant();
+    }
+
+    if (role != Qt::DisplayRole) {
+        return QVariant();
+    }
 
     switch (index.column()) {
         case ColumnPid:
@@ -50,6 +67,10 @@ QVariant ProcessTableModel::data(const QModelIndex &index, int role) const
             return QString::number(processInfo.residentMemoryBytes / 1024);
         case ColumnThreads:
             return processInfo.threadCount;
+        case ColumnDiskRead:
+            return QString::number(processInfo.diskReadBytesPerSec / 1024.0, 'f', 1);
+        case ColumnDiskWrite:
+            return QString::number(processInfo.diskWriteBytesPerSec / 1024.0, 'f', 1);
         default:
             return QVariant();
     }
@@ -70,6 +91,8 @@ QVariant ProcessTableModel::headerData(int section, Qt::Orientation orientation,
         case ColumnMemoryPercent: return QStringLiteral("Mem %");
         case ColumnResidentMemory: return QStringLiteral("RSS (KB)");
         case ColumnThreads: return QStringLiteral("Threads");
+        case ColumnDiskRead: return QStringLiteral("Disk Read (KB/s)");
+        case ColumnDiskWrite: return QStringLiteral("Disk Write (KB/s)");
         default: return QVariant();
     }
 }
@@ -79,6 +102,16 @@ void ProcessTableModel::updateProcessList(const QVector<ProcessInfo> &processLis
     beginResetModel();
     processes = processList;
     endResetModel();
+}
+
+void ProcessTableModel::markHiddenProcessIds(const QSet<int> &hiddenProcessIds)
+{
+    hiddenProcessIdSet = hiddenProcessIds;
+
+    if (rowCount() > 0) {
+        emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1),
+                          {Qt::BackgroundRole, Qt::ForegroundRole});
+    }
 }
 
 const ProcessInfo &ProcessTableModel::processAt(int row) const

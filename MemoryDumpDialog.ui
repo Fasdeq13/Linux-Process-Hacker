@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MemoryDumpDialog</class>
+ <widget class="QDialog" name="MemoryDumpDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>760</width>
+    <height>520</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Memory Dumper</string>
+  </property>
+  <layout class="QVBoxLayout" name="rootVerticalLayout">
+   <item>
+    <widget class="QLabel" name="targetProcessLabel">
+     <property name="text">
+      <string>Target process</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="topButtonsHorizontalLayout">
+     <item>
+      <widget class="QPushButton" name="refreshRegionsButton">
+       <property name="text">
+        <string>Refresh Regions</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="topButtonsSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QListWidget" name="regionsListWidget"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="regionDetailsLabel">
+     <property name="text">
+      <string>Select a memory region above</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QListWidget" name="extractedStringsListWidget"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="bottomButtonsHorizontalLayout">
+     <item>
+      <widget class="QPushButton" name="extractStringsButton">
+       <property name="text">
+        <string>Extract Strings</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="dumpRawButton">
+       <property name="text">
+        <string>Dump Region to .bin</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="bottomButtonsSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="closeDialogButton">
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>closeDialogButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MemoryDumpDialog</receiver>
+   <slot>reject()</slot>
+  </connection>
+ </connections>
+</ui>

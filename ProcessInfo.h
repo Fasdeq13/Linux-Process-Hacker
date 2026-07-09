@@ -44,6 +44,13 @@ public:
     int niceValue = 0;
     int priority = 0;
 
+    qint64 readBytesTotal = 0;
+    qint64 writeBytesTotal = 0;
+    double diskReadBytesPerSec = 0.0;
+    double diskWriteBytesPerSec = 0.0;
+
+    bool isHiddenFromProcFs = false;
+
     static ProcessState stateFromChar(QChar stateChar);
     static QString stateToString(ProcessState state);
 };

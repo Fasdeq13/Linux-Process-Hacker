@@ -3,6 +3,7 @@
 
 #include <QAbstractTableModel>
 #include <QVector>
+#include <QSet>
 #include "ProcessInfo.h"
 
 class ProcessTableModel : public QAbstractTableModel
@@ -20,6 +21,8 @@ public:
         ColumnMemoryPercent,
         ColumnResidentMemory,
         ColumnThreads,
+        ColumnDiskRead,
+        ColumnDiskWrite,
         ColumnCount
     };
 
@@ -31,10 +34,12 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
     void updateProcessList(const QVector<ProcessInfo> &processList);
+    void markHiddenProcessIds(const QSet<int> &hiddenProcessIds);
     const ProcessInfo &processAt(int row) const;
 
 private:
     QVector<ProcessInfo> processes;
+    QSet<int> hiddenProcessIdSet;
 };
 
 #endif

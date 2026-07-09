@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "ProcessReader.h"
 #include "ProcFsUtils.h"
 
@@ -16,12 +17,20 @@ QVector<ProcessInfo> ProcessReader::readAllProcesses()
     QVector<ProcessInfo> processList;
     const QVector<int> processIds = ProcFsUtils::listProcessIds();
 
+    if (!ioDeltaTimerStarted) {
+        ioDeltaTimer.start();
+        ioDeltaTimerStarted = true;
+    }
+
     for (int pid : processIds) {
         std::optional<ProcessInfo> processInfo = readSingleProcess(pid);
         if (processInfo.has_value()) {
             processList.append(processInfo.value());
         }
     }
+
+    ioDeltaTimer.restart();
+
     return processList;
 }
 
@@ -37,6 +46,8 @@ std::optional<ProcessInfo> ProcessReader::readSingleProcess(int pid)
     parseStatusFile(pid, processInfo);
     parseCmdlineFile(pid, processInfo);
     parseExeLink(pid, processInfo);
+    parseIoFile(pid, processInfo);
+    computeIoDeltaPerSecond(processInfo);
 
     return processInfo;
 }
@@ -125,6 +136,59 @@ bool ProcessReader::parseExeLink(int pid, ProcessInfo &processInfo)
     QFileInfo linkInfo(exePath);
     processInfo.executablePath = linkInfo.symLinkTarget();
     return !processInfo.executablePath.isEmpty();
+}
+
+bool ProcessReader::parseIoFile(int pid, ProcessInfo &processInfo)
+{
+    QString ioPath = ProcFsUtils::procPath(pid, "io");
+    QStringList lines = ProcFsUtils::readFileLines(ioPath);
+    if (lines.isEmpty()) {
+        return false;
+    }
+
+    for (const QString &line : lines) {
+        if (line.startsWith("read_bytes:")) {
+            QStringList parts = ProcFsUtils::splitFields(line);
+            if (parts.size() > 1) {
+                processInfo.readBytesTotal = parts.at(1).toLongLong();
+            }
+        } else if (line.startsWith("write_bytes:")) {
+            QStringList parts = ProcFsUtils::splitFields(line);
+            if (parts.size() > 1) {
+                processInfo.writeBytesTotal = parts.at(1).toLongLong();
+            }
+        }
+    }
+
+    return true;
+}
+
+void ProcessReader::computeIoDeltaPerSecond(ProcessInfo &processInfo)
+{
+    qint64 elapsedMilliseconds = ioDeltaTimer.isValid() ? ioDeltaTimer.elapsed() : 0;
+
+    if (elapsedMilliseconds <= 0) {
+        previousIoSnapshots.insert(processInfo.pid, {processInfo.readBytesTotal, processInfo.writeBytesTotal});
+        return;
+    }
+
+    double elapsedSeconds = static_cast<double>(elapsedMilliseconds) / 1000.0;
+
+    if (previousIoSnapshots.contains(processInfo.pid)) {
+        const ProcessIoSnapshot &previousSnapshot = previousIoSnapshots.value(processInfo.pid);
+
+        qint64 readDelta = processInfo.readBytesTotal - previousSnapshot.readBytes;
+        qint64 writeDelta = processInfo.writeBytesTotal - previousSnapshot.writeBytes;
+
+        if (readDelta > 0) {
+            processInfo.diskReadBytesPerSec = static_cast<double>(readDelta) / elapsedSeconds;
+        }
+        if (writeDelta > 0) {
+            processInfo.diskWriteBytesPerSec = static_cast<double>(writeDelta) / elapsedSeconds;
+        }
+    }
+
+    previousIoSnapshots.insert(processInfo.pid, {processInfo.readBytesTotal, processInfo.writeBytesTotal});
 }
 
 QString ProcessReader::resolveUserName(int userId)

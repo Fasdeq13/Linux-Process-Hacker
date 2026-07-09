@@ -39,6 +39,27 @@ set(PROJECT_SOURCES
     NetworkTableModel.h
     ProcessSignalSender.cpp
     ProcessSignalSender.h
+    RootkitDetector.cpp
+    RootkitDetector.h
+    RootkitScanWorker.cpp
+    RootkitScanWorker.h
+    MemoryRegion.cpp
+    MemoryRegion.h
+    MemoryMapsParser.cpp
+    MemoryMapsParser.h
+    ProcessMemoryDumper.cpp
+    ProcessMemoryDumper.h
+    MemoryDumpDialog.cpp
+    MemoryDumpDialog.h
+    MemoryDumpDialog.ui
+    AutostartEntry.cpp
+    AutostartEntry.h
+    DesktopFileParser.cpp
+    DesktopFileParser.h
+    AutostartManager.cpp
+    AutostartManager.h
+    AutostartTableModel.cpp
+    AutostartTableModel.h
 )
 
 qt_add_executable(LinuxProcessHacker

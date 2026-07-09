@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>650</height>
+    <width>1100</width>
+    <height>680</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,7 +38,56 @@
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QPushButton" name="scanRootkitButton">
+        <property name="text">
+         <string>Scan for Hidden Processes</string>
+        </property>
+       </widget>
+      </item>
      </layout>
+    </item>
+    <item>
+     <widget class="QWidget" name="searchBarWidget">
+      <layout class="QHBoxLayout" name="searchBarHorizontalLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="searchIconLabel">
+         <property name="text">
+          <string>Search:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="searchLineEdit">
+         <property name="placeholderText">
+          <string>Filter by PID, name, or user...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="closeSearchButton">
+         <property name="text">
+          <string>X</string>
+         </property>
+         <property name="maximumWidth">
+          <number>28</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </item>
     <item>
      <widget class="QTabWidget" name="mainTabWidget">
@@ -62,6 +111,41 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="autostartTab">
+       <attribute name="title">
+        <string>Autostart</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="autostartTabLayout">
+        <item>
+         <widget class="QTableView" name="autostartTableView"/>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="autostartButtonsHorizontalLayout">
+          <item>
+           <widget class="QPushButton" name="refreshAutostartButton">
+            <property name="text">
+             <string>Refresh</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="removeAutostartButton">
+            <property name="text">
+             <string>Remove Entry</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="autostartButtonsSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -71,7 +155,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1000</width>
+     <width>1100</width>
      <height>25</height>
     </rect>
    </property>
