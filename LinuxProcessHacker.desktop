@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Linux Process Hacker
+GenericName=System & Process Monitor
+Comment=Native C++/Qt6 system and process monitor with rootkit detection, I/O monitor, memory dumper and autostart manager
+Exec=LinuxProcessHacker
+Icon=LinuxProcessHacker
+Terminal=false
+Categories=System;Monitor;Utility;
+Keywords=process;task;manager;monitor;system;network;rootkit;memory;autostart;
+StartupNotify=true
