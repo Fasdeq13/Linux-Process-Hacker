@@ -90,7 +90,7 @@ install(FILES LinuxProcessHacker.desktop
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications
 )
 
-install(FILES icon.svg
+install(FILES app-icon.svg
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps
     RENAME LinuxProcessHacker.svg
 )
