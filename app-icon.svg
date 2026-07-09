@@ -1,0 +1,35 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0b1220"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#4ade80"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="256" height="256" rx="48" fill="url(#bgGrad)"/>
+  <rect x="4" y="4" width="248" height="248" rx="45" fill="none" stroke="url(#accentGrad)" stroke-width="3" opacity="0.6"/>
+
+  <g filter="url(#glow)">
+    <path d="M62 70 L138 70 L138 92 L84 92 L84 118 L124 118 L124 140 L84 140 L84 186 L62 186 Z" fill="#4ade80"/>
+
+    <circle cx="176" cy="96" r="30" fill="none" stroke="#22d3ee" stroke-width="7"/>
+    <line x1="197" y1="117" x2="220" y2="140" stroke="#22d3ee" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <rect x="150" y="158" width="66" height="10" rx="5" fill="#22d3ee" opacity="0.9"/>
+    <rect x="150" y="176" width="46" height="10" rx="5" fill="#4ade80" opacity="0.9"/>
+    <rect x="150" y="194" width="58" height="10" rx="5" fill="#f87171" opacity="0.9"/>
+  </g>
+</svg>
