@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(LinuxProcessHacker VERSION 0.1.0 LANGUAGES CXX)
+project(LinuxProcessHacker VERSION 0.2.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -80,6 +80,17 @@ set_target_properties(LinuxProcessHacker PROPERTIES
     MACOSX_BUNDLE FALSE
 )
 
+include(GNUInstallDirs)
+
 install(TARGETS LinuxProcessHacker
-    RUNTIME DESTINATION bin
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+install(FILES LinuxProcessHacker.desktop
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications
+)
+
+install(FILES icon.svg
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps
+    RENAME LinuxProcessHacker.svg
 )
