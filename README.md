@@ -211,7 +211,7 @@ sudo apt install build-essential cmake qt6-base-dev
 ### Build
 
 ```bash
-git clone https://github.com/Fasdeq13/linux-process-hacker.git
+git clone https://github.com/<your-username>/linux-process-hacker.git
 cd linux-process-hacker
 
 cmake -B build -DCMAKE_BUILD_TYPE=Release
