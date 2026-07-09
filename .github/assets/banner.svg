@@ -1,0 +1,47 @@
+<svg width="900" height="220" viewBox="0 0 900 220" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#4ade80"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="900" height="220" rx="16" fill="url(#bgGrad)"/>
+  <rect x="1" y="1" width="898" height="218" rx="15" fill="none" stroke="#334155" stroke-width="1"/>
+
+  <g transform="translate(40,45)" filter="url(#glow)">
+    <rect x="0" y="0" width="130" height="130" rx="18" fill="#0b1220" stroke="url(#accentGrad)" stroke-width="2.5"/>
+    <path d="M30 35 L65 35 L65 45 L40 45 L40 60 L60 60 L60 70 L40 70 L40 95 L30 95 Z" fill="#4ade80"/>
+    <circle cx="90" cy="50" r="14" fill="none" stroke="#22d3ee" stroke-width="3"/>
+    <line x1="99" y1="59" x2="110" y2="70" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+    <rect x="72" y="78" width="40" height="8" rx="4" fill="#22d3ee" opacity="0.85"/>
+    <rect x="72" y="92" width="28" height="8" rx="4" fill="#4ade80" opacity="0.85"/>
+    <rect x="72" y="106" width="34" height="8" rx="4" fill="#f87171" opacity="0.85"/>
+  </g>
+
+  <g transform="translate(200,60)">
+    <text x="0" y="40" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="42" font-weight="700" fill="#f8fafc">Linux Process Hacker</text>
+    <text x="0" y="78" font-family="Consolas, Monaco, monospace" font-size="18" fill="#94a3b8">Native C++/Qt6 System &amp; Process Monitor for Linux</text>
+    <g transform="translate(0,98)">
+      <rect x="0" y="0" width="90" height="26" rx="13" fill="#1e293b" stroke="#4ade80" stroke-width="1.2"/>
+      <text x="45" y="18" font-family="Consolas, monospace" font-size="13" fill="#4ade80" text-anchor="middle">/proc</text>
+      <rect x="100" y="0" width="110" height="26" rx="13" fill="#1e293b" stroke="#22d3ee" stroke-width="1.2"/>
+      <text x="155" y="18" font-family="Consolas, monospace" font-size="13" fill="#22d3ee" text-anchor="middle">Qt Widgets</text>
+      <rect x="220" y="0" width="110" height="26" rx="13" fill="#1e293b" stroke="#f87171" stroke-width="1.2"/>
+      <text x="275" y="18" font-family="Consolas, monospace" font-size="13" fill="#f87171" text-anchor="middle">Rootkit Scan</text>
+      <rect x="340" y="0" width="120" height="26" rx="13" fill="#1e293b" stroke="#facc15" stroke-width="1.2"/>
+      <text x="400" y="18" font-family="Consolas, monospace" font-size="13" fill="#facc15" text-anchor="middle">v0.2 stable</text>
+    </g>
+  </g>
+</svg>
